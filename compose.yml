@@ -1,0 +1,15 @@
+services:
+  mongodb:
+    container_name: nodejs-chat-db
+    restart: always
+    image: mongo:latest
+    environment:
+      - MONGO_USER=mongo
+      - MONGO_PASSWORD=mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb-data:/data/db
+
+volumes:
+  mongodb-data:

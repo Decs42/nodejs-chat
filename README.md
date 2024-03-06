@@ -7,3 +7,10 @@
 ```
 pnpm install
 ```
+
+
+### spin up a mongo db container for data persitence 
+
+```
+docker compose up
+```
