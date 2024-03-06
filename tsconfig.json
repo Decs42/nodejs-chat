@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+      "outDir": "dist",
+      "baseUrl": "src",
+      "sourceMap": true,
+      "target": "esnext",
+      "module": "NodeNext",
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "noImplicitAny": true,
+      "strict": true,
+  },
+  "include": [
+      "src/**/*.ts",
+  ],
+  "exclude": [
+      "node_modules",
+      "dist",
+  ]
+}
