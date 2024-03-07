@@ -3,6 +3,11 @@ import bcrypt from "bcrypt";
 import { UserModel } from "../../models/user";
 import { generateAccessToken } from "api/utils/auth";
 
+/**
+ * Login handler
+ * Primary Goal: validate the login input and return an access token and login state
+ */
+
 export const login = async (req: Request, res: Response) => {
   const { username, password } = req.body;
 

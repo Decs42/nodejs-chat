@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
 
+/**
+ * User Model
+ * Primary Goal: Creates a mongoDB model for user
+ */
+
 const UserSchema = new mongoose.Schema(
   {
     username: {

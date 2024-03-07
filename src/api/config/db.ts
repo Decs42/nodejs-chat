@@ -1,6 +1,12 @@
 import { MONGO_DB_URL } from "../constants/global";
 import mongoose from "mongoose";
 
+
+/**
+ * mongoDB connection
+ * Primary Goal: Opens a mongo db connection
+ */
+
 export const db = () => {
   try {
     mongoose.connect(MONGO_DB_URL);
@@ -10,7 +16,7 @@ export const db = () => {
   }
 
   mongoose.connection.once("open", () => {
-    console.log("db connected");
+    console.log("Db connected");
   });
 
   mongoose.connection.on("error", (e) => {
