@@ -20,13 +20,13 @@ export const login = async (req: Request, res: Response) => {
       .json({ message: "No user exists with this username" });
   }
 
-  const validPassword = await bcrypt.compare(password, user[0]?.password);
+  const validPassword: boolean = await bcrypt.compare(password, user[0]?.password);
 
   if (!validPassword) {
     return res.status(403).json({ message: "Invalid Password" });
   }
 
-  const accessToken = generateAccessToken(user[0].id);
+  const accessToken: string = generateAccessToken(user[0].id);
 
   return res.status(200).json({ state: "AUTHENTICATED", accessToken });
 };
