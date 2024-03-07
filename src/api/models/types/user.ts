@@ -5,3 +5,8 @@ export interface User {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface SeedUser {
+  username: string;
+  password: string;
+}

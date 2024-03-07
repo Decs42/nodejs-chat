@@ -3,6 +3,8 @@ import api from "./api/index";
 
 const app: Express = express();
 
+app.use(express.json());
+app.disable("x-powered-by");
 app.use("/api", api);
 
 export default app;
