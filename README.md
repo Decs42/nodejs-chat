@@ -63,3 +63,8 @@ http://localhost:8080/api/auth/login
 - Once you have been authenticated , the server will return a response that contains your access token and a state of authenticated
 
 
+### future concerns
+
+- in order to scale , i would make a sole websiocket server and api on another , its always a good idea to have a dedicated websocket server.
+
+
