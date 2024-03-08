@@ -16,5 +16,14 @@ export const createMessage = async (data: Message) => {
  */
 
 export const getMessageHistory = async () => {
-    return await MessageModel.find({});
-  };
+  return await MessageModel.find({});
+};
+
+/**
+ * Message Utils
+ * Primary Goal: Deletes a message from the db
+ */
+
+export const deleteMessage = async (id: string) => {
+  return await MessageModel.deleteOne({ _id: id });
+};

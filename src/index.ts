@@ -4,9 +4,14 @@ import { NODE_PORT } from "./api/constants/global";
 import app from "./app";
 import WebSocket, { WebSocketServer } from "ws";
 import { authWebsocket } from "./api/utils/websocket";
-import { JwtAuth } from "api/models/types/auth";
+import { JwtAuth } from "./api/models/types/auth";
 import { IncomingMessage } from "http";
-import { createMessage, getMessageHistory } from "./api/utils/message";
+import {
+  createMessage,
+  deleteMessage,
+  getMessageHistory,
+} from "./api/utils/message";
+import { ParsedMessage } from "./api/models/types/message";
 
 // opens a db coonection
 db();
@@ -59,52 +64,82 @@ wss.on(
 
     getMessageHistory()
       .then((history) => {
-        ws.send(JSON.stringify({ type: "history", history }));
+        ws.send(JSON.stringify({ type: "history", data: history }));
       })
       .catch((e) => {
         ws.send(
           JSON.stringify({
             type: "error",
-            error: `Failed to get chat history: ${e.message}`,
+            message: `Failed to get chat history: ${e.message}`,
           })
         );
       });
 
     ws.on("message", (data) => {
-      const parsedData = JSON.parse(data.toString());
+      const parsedData: ParsedMessage = JSON.parse(data.toString());
 
-      switch (true) {
-        case parsedData?.action === "message":
-          createMessage({
-            sender: authData.userId,
-            message: parsedData.data,
-            username: authData.userName
+      if (parsedData?.action === "send_message") {
+        createMessage({
+          sender: authData.userId,
+          message: parsedData.data,
+          username: authData.userName,
+        })
+          .then((res) => {
+            wss.clients.forEach((client) => {
+              if (ws !== client && client.readyState === WebSocket.OPEN) {
+                client.send(
+                  JSON.stringify({
+                    message: res.message,
+                    sender: res.sender,
+                    time: res.createdAt,
+                    username: res.username,
+                  })
+                );
+              }
+            });
           })
-            .then((res) => {
-              wss.clients.forEach((client) => {
-                if (client.readyState === WebSocket.OPEN) {
-                  client.send(
+          .catch((e) => {
+            ws.send(
+              JSON.stringify({
+                type: "error",
+                message: `Failed to send message: ${e.message}`,
+              })
+            );
+          });
+      } else {
+        deleteMessage(parsedData.data)
+          .then((res) => {
+            if (res.deletedCount === 0) {
+              throw new Error("This message has already been deleted");
+            } else {
+              getMessageHistory()
+                .then((history) => {
+                  ws.send(JSON.stringify({ type: "history", data: history }));
+                })
+                .catch((e) => {
+                  ws.send(
                     JSON.stringify({
-                      message: res.message,
-                      sender: res.sender,
-                      time: res.createdAt,
-                      username: res.username,
+                      type: "error",
+                      message: `Failed to get chat history: ${e.message}`,
                     })
                   );
-                }
-              });
-            })
-            .catch((e) => {
+                });
               ws.send(
                 JSON.stringify({
-                  type: "error",
-                  error: `Failed to send message: ${e.message}`,
+                  type: "success",
+                  message: `Deleted message`,
                 })
               );
-            });
-
-        case parsedData?.type === "delete_message":
-          console.log('delete message here')
+            }
+          })
+          .catch((e) => {
+            ws.send(
+              JSON.stringify({
+                type: "error",
+                message: `Failed to delete message: ${e.message}`,
+              })
+            );
+          });
       }
     });
 

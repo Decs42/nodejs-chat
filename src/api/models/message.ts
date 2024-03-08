@@ -10,7 +10,6 @@ const MessageSchema = new mongoose.Schema(
     sender: {type : mongoose.Schema.Types.ObjectId, ref: "User"},
     message: {type: String, required: true},
     username:{type: String, required: true},
-    archived: {type: Boolean, default: false}
   },
   { timestamps: true }
 );
