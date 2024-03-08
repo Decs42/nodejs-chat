@@ -19,6 +19,21 @@ export const verifyToken = (authToken: string) => {
 
 /**
  * Websocket Utils
+ * Primary Goal: Handle the socket connection error and sends to client
+ */
+
+export const handleConnectionError = (ws: WebSocket, e: Error) => {
+  console.log(e)
+  return ws.send(
+    JSON.stringify({
+      type: "error",
+      message: `Error: ${e.message}`,
+    })
+  );
+};
+
+/**
+ * Websocket Utils
  * Primary Goal: Authenticate a user and upgrade their connection to socket
  */
 
@@ -85,12 +100,7 @@ export const actionHandler = (
         });
       })
       .catch((e) => {
-        ws.send(
-          JSON.stringify({
-            type: "error",
-            message: `Failed to send message: ${e.message}`,
-          })
-        );
+        handleConnectionError(ws, e);
       });
   } else {
     deleteMessage(parsedData.data)
@@ -103,12 +113,7 @@ export const actionHandler = (
               ws.send(JSON.stringify({ type: "history", data: history }));
             })
             .catch((e) => {
-              ws.send(
-                JSON.stringify({
-                  type: "error",
-                  message: `Failed to get chat history: ${e.message}`,
-                })
-              );
+              handleConnectionError(ws, e);
             });
           ws.send(
             JSON.stringify({
@@ -119,12 +124,7 @@ export const actionHandler = (
         }
       })
       .catch((e) => {
-        ws.send(
-          JSON.stringify({
-            type: "error",
-            message: `Failed to delete message: ${e.message}`,
-          })
-        );
+        handleConnectionError(ws, e);
       });
   }
 };

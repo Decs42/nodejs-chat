@@ -1,7 +1,7 @@
 {
   "name": "nodejs-chat",
   "version": "1.0.0",
-  "description": "",
+  "description": "real-time nodejs chat room",
   "main": "src/index.ts",
   "scripts": {
     "start": "node dist/index.js",
