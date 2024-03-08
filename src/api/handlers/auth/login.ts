@@ -31,7 +31,7 @@ export const login = async (req: Request, res: Response) => {
     return res.status(403).json({ message: "Invalid Password" });
   }
 
-  const accessToken: string = generateAccessToken(user[0].id);
+  const accessToken: string = generateAccessToken(user[0].id, user[0].username);
 
   return res.status(200).json({ state: "AUTHENTICATED", accessToken });
 };

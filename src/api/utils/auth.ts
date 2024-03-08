@@ -37,8 +37,8 @@ export const seedUsers = async () => {
  * Primary Goal: Generates an access token for the user
  */
 
-export const generateAccessToken = (userId: number) => {
-  return jwt.sign({ userId }, JWT_ACCESS_SECRET, {
+export const generateAccessToken = (userId: string, userName: string) => {
+  return jwt.sign({ userId, userName }, JWT_ACCESS_SECRET, {
     expiresIn: "15m",
   });
 };
