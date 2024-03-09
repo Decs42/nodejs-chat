@@ -33,6 +33,8 @@ jobs:
         run: pnpm install
       - name: Run Linter
         run: pnpm run lint
+      - name: Run Tests
+        run: pnpm run test
 
 
   deploy:
