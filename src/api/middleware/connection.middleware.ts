@@ -2,7 +2,7 @@ import { fetchAllChats } from "../utils/message.utils";
 import { JwtAuth } from "../models/types/auth";
 import { IncomingMessage } from "http";
 import WebSocket from "ws";
-import { actionHandler, handleConnectionError } from "../utils/websocket.utils";
+import { actionHandler } from "../utils/websocket.utils";
 import { ParsedMessage } from "../models/types/message";
 
 /**
@@ -15,7 +15,7 @@ export const connection = (
   _: IncomingMessage,
   authData: JwtAuth
 ) => {
-  ws.on("error", () => console.log("socket connection error"));
+  ws.on("error", (e) => console.log("socket connection error", e));
 
   // on connection to the socket we pull the chat history and send it to the client
   fetchAllChats(ws);

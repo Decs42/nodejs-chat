@@ -1,4 +1,3 @@
-import { UserModel } from "../models/user";
 import { JWT_ACCESS_SECRET, SEED_USERS } from "../constants/global";
 import { SeedUser } from "../models/types/user";
 import bcrypt from "bcrypt";

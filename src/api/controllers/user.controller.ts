@@ -1,4 +1,4 @@
-import { SeedUser, User } from "../models/types/user";
+import { SeedUser } from "../models/types/user";
 import { UserModel } from "../models/user";
 
 /**

@@ -5,7 +5,7 @@ import {
   getMessageHistory,
 } from "../controllers/message.controller";
 import { handleConnectionError } from "./websocket.utils";
-import { Message, ParsedMessage } from "../models/types/message";
+import { Message } from "../models/types/message";
 
 /**
  * Message Utils

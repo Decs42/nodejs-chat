@@ -8,7 +8,7 @@ import { Duplex } from "stream";
  */
 
 export const upgradeServer = (req: IncomingMessage, socket: Duplex, head: Buffer) => {
-  socket.on("error", (e) => console.log("socket upgrade error"));
+  socket.on("error", () => console.log("socket upgrade error"));
 
   const { authorization } = req.headers;
   authenticateUser(authorization, req, socket, head);
