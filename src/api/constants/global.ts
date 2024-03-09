@@ -6,7 +6,7 @@ import { SeedUser } from "../models/types/user";
  * Primary Goal: Provide global constants to reuse throughout code base
  */
 
-export const NODE_PORT: number = 8080;
+export const NODE_PORT: number = Number(process.env.PORT) ?? 8080;
 export const MONGO_DB_URL: string = "mongodb://127.0.0.1/db";
 export const JWT_ACCESS_SECRET: string = process.env.JWT_ACCESS_SECRET ?? "super-secret";
 

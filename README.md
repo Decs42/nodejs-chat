@@ -1,6 +1,31 @@
 # nodejs-chat
 
-## To get up and running:
+# About the project
+
+## This project consists of the following stack
+- Nodejs
+- MongoDB
+- Docker
+
+### This project allows users to authenticate and gain a token to connect to a websocket that acts as a chat room.
+### When a user connects to the chat room they will be server a copy of the chat history
+### A user will have the option to send a message and delete a message
+### NodeJs test runner is used to run the test
+### The application will be linted , tested and built on a push to the main branch
+### Docker is used to create a container of mongDB we can use for the persistent storgae of data in the application
+
+## Postman workspace
+- https://app.getpostman.com/join-team?invite_code=863f6792ccc98a6d238766e671952755&target_code=5544a93e96c4fbde787923c6f86b44a0
+
+
+# To get up and running:
+
+### This project useses node 20 to make use of node test runner
+- Please install node 20 stable
+
+```
+nvm use v20
+```
 
 ### This project use pnpm as a package manager
 
@@ -14,7 +39,8 @@ pnpm install
 - Create a .env file
 
 ```
-  JWT_ACCESS_SECRET=
+  JWT_ACCESS_SECRET=super-secret
+  PORT=8080
 ```
 
 ### Source ENV:
@@ -23,11 +49,29 @@ pnpm install
 - For Mac run:
   `set -o allexport; source .env; set +o allexport`
 
-### spin up a mongo db container for data persitence
+### spin up a mongo db container for data persitence in a seperate terminal
 
 ```
 docker compose up
 ```
+
+### you can use this command to start the server
+
+```
+pnpm run dev
+```
+
+### some other commands you can you are:
+
+```
+pnpm run build
+pnpm run lint
+pnpm run start
+pnpm run lint:fix
+pnpm run test
+```
+
+
 
 ### How to authenticate
 
@@ -71,11 +115,11 @@ http://localhost:8080/api/auth/login
 
 
 
-### Server and websocket capabilities
+## Websocket use
 
 -how to use
 
-## Server to client communication
+### What the server will send to the client
 
 - when connecting to the websocket data will be sent to the client , this data contains the history of the chat room
 
@@ -95,9 +139,9 @@ http://localhost:8080/api/auth/login
 }
 
 ```
-## Client to server communication
+## What a client can send to the server
 
-- you will then be able to send a message to the chat room from the client like below:
+- you will then be able to send a message to the chat room from the client like below, where the action is send_message and the data is the message 
 
 ```
 {
@@ -108,6 +152,7 @@ http://localhost:8080/api/auth/login
 ```
 
 - you will then be able to delete a message to the chat room from the client like below:
+, where the action is delete_message and data is the ID of the message
 
 
 ```
@@ -121,5 +166,4 @@ http://localhost:8080/api/auth/login
 ### future concerns
 
 - in order to scale , i would make a sole websiocket server and api on another , its always a good idea to have a dedicated websocket server.
-
 

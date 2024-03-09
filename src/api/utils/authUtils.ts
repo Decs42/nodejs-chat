@@ -39,9 +39,7 @@ export const seedUsers = async () => {
  */
 
 export const generateAccessToken = (userId: string, userName: string) => {
-  return jwt.sign({ userId, userName }, JWT_ACCESS_SECRET, {
-    expiresIn: "15m",
-  });
+  return jwt.sign({ userId, userName }, JWT_ACCESS_SECRET);
 };
 
 
