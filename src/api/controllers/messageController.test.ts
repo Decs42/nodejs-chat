@@ -14,7 +14,7 @@ const messageTestService = {
  * Primary Goal: tests create message controller
  */
 
-describe("messageController", () => {
+describe("createMessage", () => {
   it("create a message", async () => {
     const mockPayload: Message = {
       username: "test",
@@ -38,7 +38,7 @@ describe("messageController", () => {
  * Primary Goal: tests get message history
  */
 
-describe("messageController", () => {
+describe("getMessageHistory", () => {
   it("get message history", async () => {
     const mockResponse = [
       {
@@ -68,7 +68,7 @@ describe("messageController", () => {
  * Primary Goal: tests delete message
  */
 
-describe("messageController", () => {
+describe("deleteMessage", () => {
   it("delete a message", async () => {
     const mockPayload: string = 'test-id';
 

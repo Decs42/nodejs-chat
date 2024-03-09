@@ -13,7 +13,7 @@ const userTestService = {
  * Primary Goal: tests get all users
  */
 
-describe("userController", () => {
+describe("getAllUsers", () => {
   it("get all users", async () => {
     const mockResponse = [
       {
@@ -37,7 +37,7 @@ describe("userController", () => {
  * Primary Goal: teste create users
  */
 
-describe("userController", () => {
+describe("createUsers", () => {
   it("create users", async () => {
     const mockPayload: SeedUser[] = [
       {
