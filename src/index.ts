@@ -1,4 +1,4 @@
-import { seedUsers } from "./api/utils/auth.utils";
+import { seedUsers } from "./api/utils/authUtils";
 import { db } from "./api/config/db.config";
 import { NODE_PORT } from "./api/constants/global";
 import app from "./app";

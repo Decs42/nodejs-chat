@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import { UserModel } from "../../models/user";
 import { generateAccessToken } from "../../utils/authUtils";
+import { findUserByUsername } from "../../controllers/userController";
 
 /**
  * Login handler
@@ -17,7 +17,7 @@ export const login = async (req: Request, res: Response) => {
       .json({ message: "Username and password are required" });
   }
 
-  const user = await UserModel.find({ username });
+  const user = await findUserByUsername(username)
 
   if (user.length === 0) {
     return res
