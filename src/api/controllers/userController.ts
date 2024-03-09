@@ -8,10 +8,6 @@ import { UserModel } from "../models/user";
 
 export const getAllUsers = async () => {
   return await UserModel.find({}, { password: 0 })
-    .then((allUsers) => allUsers)
-    .catch((e) => {
-      throw e;
-    });
 };
 
 /**
@@ -21,10 +17,6 @@ export const getAllUsers = async () => {
 
 export const createUsers = async (data: SeedUser[]) => {
   return await UserModel.insertMany(data)
-    .then((res) => res)
-    .catch((e) => {
-      throw e;
-    });
 };
 
 /**
@@ -34,8 +26,4 @@ export const createUsers = async (data: SeedUser[]) => {
 
 export const findUserByUsername = async (username: string) => {
   return await UserModel.find({ username })
-    .then((res) => res)
-    .catch((e) => {
-      throw e;
-    });
 };

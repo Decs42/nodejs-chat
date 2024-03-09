@@ -7,13 +7,12 @@ import { createUsers, getAllUsers } from "../controllers/userController";
  */
 
 export const fetchAllusers = async () => {
-  return getAllUsers()
-    .then((res) => {
-      return res;
-    })
-    .catch((e) => {
-      throw Error(`Failed to get all users: ${e.message}`);
-    });
+  try {
+    const res = await getAllUsers();
+    return res;
+  } catch (e) {
+    throw Error(`Failed to get all users: ${e}`);
+  }
 };
 
 /**
@@ -22,11 +21,10 @@ export const fetchAllusers = async () => {
  */
 
 export const createManyusers = async (data: SeedUser[]) => {
-  return createUsers(data)
-    .then((res) => {
-      return res;
-    })
-    .catch((e) => {
-      throw Error(`Failed to create multiple users: ${e.message}`);
-    });
+  try {
+    const res = await createUsers(data);
+    return res;
+  } catch (e) {
+    throw Error(`Failed to create multiple users: ${e}`);
+  }
 };

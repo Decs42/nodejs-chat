@@ -12,11 +12,11 @@ import { verifyToken } from "./authUtils";
  * Primary Goal: Handle the socket connection error and sends to client
  */
 
-export const handleConnectionError = (ws: WebSocket, e: Error) => {
+export const handleConnectionError = (ws: WebSocket, e: unknown) => {
   return ws.send(
     JSON.stringify({
       type: "error",
-      message: `Error: ${e.message}`,
+      message: `Error: ${e}`,
     })
   );
 };

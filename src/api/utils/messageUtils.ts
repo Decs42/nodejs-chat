@@ -13,13 +13,12 @@ import { Message } from "../models/types/message";
  */
 
 export const fetchAllChats = async (ws: WebSocket) => {
-  return getMessageHistory()
-    .then((history) => {
-      ws.send(JSON.stringify({ type: "history", data: history }));
-    })
-    .catch((e) => {
-      return handleConnectionError(ws, e);
-    });
+  try {
+    const history = await getMessageHistory();
+    ws.send(JSON.stringify({ type: "history", data: history }));
+  } catch (e) {
+    return handleConnectionError(ws, e);
+  }
 };
 
 /**
@@ -28,18 +27,17 @@ export const fetchAllChats = async (ws: WebSocket) => {
  */
 
 export const createChatMessage = async (data: Message, ws: WebSocket) => {
-  return createMessage(data)
-    .then((res) => {
-      return {
-        message: res.message,
-        sender: res.sender,
-        time: res.createdAt,
-        username: res.username,
-      };
-    })
-    .catch((e) => {
-      return handleConnectionError(ws, e);
-    });
+  try {
+    const res = await createMessage(data);
+    return {
+      message: res.message,
+      sender: res.sender,
+      time: res.createdAt,
+      username: res.username,
+    };
+  } catch (e) {
+    return handleConnectionError(ws, e);
+  }
 };
 
 /**
@@ -48,21 +46,20 @@ export const createChatMessage = async (data: Message, ws: WebSocket) => {
  */
 
 export const deleteChatMessage = async (id: string, ws: WebSocket) => {
-  return deleteMessage(id)
-    .then((res) => {
-      if (res.deletedCount === 0) {
-        throw new Error("This message has already been deleted");
-      } else {
-        fetchAllChats(ws);
-        ws.send(
-          JSON.stringify({
-            type: "success",
-            message: `Deleted message`,
-          })
-        );
-      }
-    })
-    .catch((e) => {
-      handleConnectionError(ws, e);
-    });
+  try {
+    const res = await deleteMessage(id);
+    if (res.deletedCount === 0) {
+      throw new Error("This message has already been deleted");
+    } else {
+      fetchAllChats(ws);
+      ws.send(
+        JSON.stringify({
+          type: "success",
+          message: `Deleted message`,
+        })
+      );
+    }
+  } catch (e) {
+    handleConnectionError(ws, e);
+  }
 };
