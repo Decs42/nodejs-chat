@@ -16,7 +16,7 @@ export const handleConnectionError = (ws: WebSocket, e: unknown) => {
   return ws.send(
     JSON.stringify({
       type: "error",
-      message: `Error: ${e}`,
+      message: `${e instanceof Error && e.message ? e.message : 'Uknown errror'}`,
     })
   );
 };
@@ -93,6 +93,6 @@ export const actionHandler = async (
       });
     }
   } else {
-    deleteChatMessage(parsedData.data, ws);
+    await deleteChatMessage(parsedData.data, ws);
   }
 };

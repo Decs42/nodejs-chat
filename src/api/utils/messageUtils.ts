@@ -15,7 +15,7 @@ import { Message } from "../models/types/message";
 export const fetchAllChats = async (ws: WebSocket) => {
   try {
     const history = await getMessageHistory();
-    ws.send(JSON.stringify({ type: "history", data: history }));
+    return ws.send(JSON.stringify({ type: "history", data: history }));
   } catch (e) {
     return handleConnectionError(ws, e);
   }
@@ -52,7 +52,7 @@ export const deleteChatMessage = async (id: string, ws: WebSocket) => {
       throw new Error("This message has already been deleted");
     } else {
       fetchAllChats(ws);
-      ws.send(
+      return ws.send(
         JSON.stringify({
           type: "success",
           message: `Deleted message`,
@@ -60,6 +60,6 @@ export const deleteChatMessage = async (id: string, ws: WebSocket) => {
       );
     }
   } catch (e) {
-    handleConnectionError(ws, e);
+    return handleConnectionError(ws, e);
   }
 };

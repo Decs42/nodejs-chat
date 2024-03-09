@@ -11,6 +11,5 @@ export const upgradeServer = (req: IncomingMessage, socket: Duplex, head: Buffer
   socket.on("error", () => console.log("socket upgrade error"));
 
   const { authorization } = req.headers;
-  console.log(authorization)
-  authenticateUser(authorization, req, socket, head);
+  return authenticateUser(authorization, req, socket, head);
 };

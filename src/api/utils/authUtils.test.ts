@@ -23,7 +23,6 @@ describe("hashPassword", () => {
     mock.method(authUtilsTestService, "hashPassword", () => mockResponse);
 
     const result = authUtilsTestService.hashPassword(mockPayload);
-    console.log(result);
 
     assert.equal(result, mockResponse);
   });

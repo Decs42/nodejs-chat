@@ -7,7 +7,7 @@ import { MessageModel } from "../models/message";
  */
 
 export const createMessage = async (data: Message) => {
-  return await MessageModel.create(data)
+  return await MessageModel.create(data);
 };
 
 /**

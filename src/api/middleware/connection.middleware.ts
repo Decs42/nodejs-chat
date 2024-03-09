@@ -4,6 +4,7 @@ import { IncomingMessage } from "http";
 import WebSocket from "ws";
 import { actionHandler } from "../utils/websocketUtils";
 import { ParsedMessage } from "../models/types/message";
+import { validateMessageRequest } from "../models/validations/auth";
 
 /**
  * Middleware
@@ -15,18 +16,20 @@ export const connection = (
   _: IncomingMessage,
   authData: JwtAuth
 ) => {
-  ws.on("error", (e) => console.log("socket connection error", e));
+  ws.on("error", (e) => console.error("socket connection error", e));
 
   // on connection to the socket we pull the chat history and send it to the client
   fetchAllChats(ws);
 
   // action handler to handle incoming messages from client
   ws.on("message", (data) => {
-    const parsedData: ParsedMessage = JSON.parse(data.toString());
-    actionHandler(parsedData, authData, ws);
+    if (validateMessageRequest(data, ws)) {
+      const parsedData: ParsedMessage = JSON.parse(data.toString());
+      return actionHandler(parsedData, authData, ws);
+    }
   });
 
   ws.on("close", () => {
-    console.log("connection closed");
+    console.info("connection closed");
   });
 };

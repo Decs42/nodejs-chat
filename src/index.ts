@@ -13,7 +13,7 @@ db();
 seedUsers();
 
 const server = app.listen(NODE_PORT, () => {
-  console.log(`server running on port ${NODE_PORT}`);
+  console.info(`server running`);
 });
 
 // on server upgrade , we authenticate and handle the upgrade to socket connection
