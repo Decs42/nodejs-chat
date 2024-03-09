@@ -7,12 +7,12 @@
 - MongoDB
 - Docker
 
-### This project allows users to authenticate and gain a token to connect to a websocket that acts as a chat room.
-### When a user connects to the chat room they will be server a copy of the chat history
-### A user will have the option to send a message and delete a message
-### NodeJs test runner is used to run the test
-### The application will be linted , tested and built on a push to the main branch
-### Docker is used to create a container of mongDB we can use for the persistent storgae of data in the application
+This project allows users to authenticate and gain a token to connect to a websocket that acts as a chat room.
+Then a user connects to the chat room they will be server a copy of the chat history
+A user will have the option to send a message and delete a message
+NodeJs test runner is used to run the test
+The application will be linted , tested and built on a push to the main branch
+Docker is used to create a container of mongDB we can use for the persistent storgae of data in the application
 
 ## Postman workspace
 - https://app.getpostman.com/join-team?invite_code=863f6792ccc98a6d238766e671952755&target_code=5544a93e96c4fbde787923c6f86b44a0
