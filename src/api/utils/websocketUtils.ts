@@ -1,21 +1,11 @@
-import jwt from "jsonwebtoken";
-import { JWT_ACCESS_SECRET } from "../constants/global";
 import { JwtAuth } from "../models/types/auth";
 import { wss } from "../config/webSocket.config";
 import { Duplex } from "stream";
 import { IncomingMessage } from "http";
 import { ParsedMessage } from "../models/types/message";
 import WebSocket from "ws";
-import { createChatMessage, deleteChatMessage } from "./message.utils";
-
-/**
- * Websocket Utils
- * Primary Goal: Verifies the clients token
- */
-
-export const verifyToken = (authToken: string) => {
-  return jwt.verify(authToken, JWT_ACCESS_SECRET) as JwtAuth;
-};
+import { createChatMessage, deleteChatMessage } from "./messageUtils";
+import { verifyToken } from "./authUtils";
 
 /**
  * Websocket Utils
@@ -23,7 +13,6 @@ export const verifyToken = (authToken: string) => {
  */
 
 export const handleConnectionError = (ws: WebSocket, e: Error) => {
-  console.log(e);
   return ws.send(
     JSON.stringify({
       type: "error",

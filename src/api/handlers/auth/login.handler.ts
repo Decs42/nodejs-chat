@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { UserModel } from "../../models/user";
-import { generateAccessToken } from "../../utils/auth.utils";
+import { generateAccessToken } from "../../utils/authUtils";
 
 /**
  * Login handler

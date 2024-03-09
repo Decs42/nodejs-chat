@@ -2,7 +2,8 @@ import { JWT_ACCESS_SECRET, SEED_USERS } from "../constants/global";
 import { SeedUser } from "../models/types/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { createManyusers, fetchAllusers } from "./user.utils";
+import { createManyusers, fetchAllusers } from "./userUtils";
+import { JwtAuth } from "../models/types/auth";
 
 /**
  * Authentication Utils
@@ -41,4 +42,14 @@ export const generateAccessToken = (userId: string, userName: string) => {
   return jwt.sign({ userId, userName }, JWT_ACCESS_SECRET, {
     expiresIn: "15m",
   });
+};
+
+
+/**
+ * Authentication Utils
+ * Primary Goal: Verifies the clients token
+ */
+
+export const verifyToken = (authToken: string) => {
+  return jwt.verify(authToken, JWT_ACCESS_SECRET) as JwtAuth;
 };

@@ -1,5 +1,5 @@
 import { SeedUser } from "../models/types/user";
-import { createUsers, getAllUsers } from "../controllers/user.controller";
+import { createUsers, getAllUsers } from "../controllers/userController";
 
 /**
  * User Utils

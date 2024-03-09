@@ -1,8 +1,8 @@
-import { fetchAllChats } from "../utils/message.utils";
+import { fetchAllChats } from "../utils/messageUtils";
 import { JwtAuth } from "../models/types/auth";
 import { IncomingMessage } from "http";
 import WebSocket from "ws";
-import { actionHandler } from "../utils/websocket.utils";
+import { actionHandler } from "../utils/websocketUtils";
 import { ParsedMessage } from "../models/types/message";
 
 /**

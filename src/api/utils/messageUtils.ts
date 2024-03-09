@@ -3,8 +3,8 @@ import {
   createMessage,
   deleteMessage,
   getMessageHistory,
-} from "../controllers/message.controller";
-import { handleConnectionError } from "./websocket.utils";
+} from "../controllers/messageController";
+import { handleConnectionError } from "./websocketUtils";
 import { Message } from "../models/types/message";
 
 /**

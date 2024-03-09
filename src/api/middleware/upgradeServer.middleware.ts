@@ -1,4 +1,4 @@
-import { authenticateUser } from "../utils/websocket.utils";
+import { authenticateUser } from "../utils/websocketUtils";
 import { IncomingMessage } from "http";
 import { Duplex } from "stream";
 
