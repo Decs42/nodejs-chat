@@ -1,0 +1,60 @@
+name: CI/ CD Skeleton
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  ENVIRONMENT: dev
+  PORT: 8080
+
+jobs:
+  prep:
+    name: lint and test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Setup Node environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.13.1
+      - name: Install dependencies
+        run: pnpm install
+      - name: Run Linter
+        run: pnpm run lint
+
+
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Setup Node environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.13.1
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build process
+        run: pnpm run build
