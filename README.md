@@ -10,6 +10,7 @@
 This project allows users to authenticate and gain a token to connect to a websocket that acts as a chat room.
 Then a user connects to the chat room they will be server a copy of the chat history
 A user will have the option to send a message and delete a message
+The connection between the clients and the server are in real time 
 NodeJs test runner is used to run the test
 The application will be linted , tested and built on a push to the main branch
 Docker is used to create a container of mongDB we can use for the persistent storgae of data in the application
@@ -95,7 +96,7 @@ pnpm run test
 
 - You can use any of the above to hit this endpoint
 ```
-http://localhost:8080/api/auth/login
+`http://localhost:8080/api/auth/login`
 
 {
 	"username": "Squirtle",
