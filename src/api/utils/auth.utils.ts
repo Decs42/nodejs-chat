@@ -1,8 +1,9 @@
 import { UserModel } from "../models/user";
 import { JWT_ACCESS_SECRET, SEED_USERS } from "../constants/global";
-import { SeedUser, User } from "../models/types/user";
+import { SeedUser } from "../models/types/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { createManyusers, fetchAllusers } from "./user.utils";
 
 /**
  * Authentication Utils
@@ -19,14 +20,14 @@ export const hashPassword = (password: string) => {
  */
 
 export const seedUsers = async () => {
-  const allUsers: User[] = await UserModel.find({});
+  const allUsers = await fetchAllusers();
 
   if (allUsers.length === 0) {
     const usersWithHashedPassword: SeedUser[] = SEED_USERS.map((user) => ({
       ...user,
       password: hashPassword(user.password),
     }));
-    await UserModel.insertMany(usersWithHashedPassword);
+    await createManyusers(usersWithHashedPassword);
   }
 
   return;

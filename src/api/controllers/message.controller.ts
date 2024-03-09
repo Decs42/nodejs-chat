@@ -7,7 +7,11 @@ import { MessageModel } from "../models/message";
  */
 
 export const createMessage = async (data: Message) => {
-  return await MessageModel.create(data);
+  return await MessageModel.create(data)
+    .then((res) => res)
+    .catch((e) => {
+      throw e;
+    });
 };
 
 /**
@@ -16,7 +20,11 @@ export const createMessage = async (data: Message) => {
  */
 
 export const getMessageHistory = async () => {
-  return await MessageModel.find({});
+  return await MessageModel.find({})
+    .then((res) => res)
+    .catch((e) => {
+      throw e;
+    });
 };
 
 /**
@@ -25,5 +33,9 @@ export const getMessageHistory = async () => {
  */
 
 export const deleteMessage = async (id: string) => {
-  return await MessageModel.deleteOne({ _id: id });
+  return await MessageModel.deleteOne({ _id: id })
+    .then((res) => res)
+    .catch((e) => {
+      throw e;
+    });
 };

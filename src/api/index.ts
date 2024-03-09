@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import auth from '../api/routes/auth';
+import auth from './routes/auth.route';
 
 /**
  * Server router

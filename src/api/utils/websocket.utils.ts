@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken";
 import { JWT_ACCESS_SECRET } from "../constants/global";
 import { JwtAuth } from "../models/types/auth";
-import { wss } from "../config/webSocket";
+import { wss } from "../config/webSocket.config";
 import { Duplex } from "stream";
 import { IncomingMessage } from "http";
-import { createMessage, deleteMessage, getMessageHistory } from "./message";
 import { ParsedMessage } from "../models/types/message";
 import WebSocket from "ws";
+import { createChatMessage, deleteChatMessage } from "./message.utils";
 
 /**
  * Websocket Utils
@@ -23,7 +23,7 @@ export const verifyToken = (authToken: string) => {
  */
 
 export const handleConnectionError = (ws: WebSocket, e: Error) => {
-  console.log(e)
+  console.log(e);
   return ws.send(
     JSON.stringify({
       type: "error",
@@ -74,57 +74,36 @@ export const authenticateUser = (
  * Primary Goal: Action handler for any incoming messages sent from a client
  */
 
-export const actionHandler = (
+export const actionHandler = async (
   parsedData: ParsedMessage,
   authData: JwtAuth,
   ws: WebSocket
 ) => {
   if (parsedData.action === "send_message") {
-    createMessage({
-      sender: authData.userId,
-      message: parsedData.data,
-      username: authData.userName,
-    })
-      .then((res) => {
-        wss.clients.forEach((client) => {
-          if (client.readyState === WebSocket.OPEN) {
-            client.send(
-              JSON.stringify({
-                message: res.message,
-                sender: res.sender,
-                time: res.createdAt,
-                username: res.username,
-              })
-            );
-          }
-        });
-      })
-      .catch((e) => {
-        handleConnectionError(ws, e);
-      });
-  } else {
-    deleteMessage(parsedData.data)
-      .then((res) => {
-        if (res.deletedCount === 0) {
-          throw new Error("This message has already been deleted");
-        } else {
-          getMessageHistory()
-            .then((history) => {
-              ws.send(JSON.stringify({ type: "history", data: history }));
-            })
-            .catch((e) => {
-              handleConnectionError(ws, e);
-            });
-          ws.send(
+    const chat = await createChatMessage(
+      {
+        sender: authData.userId,
+        message: parsedData.data,
+        username: authData.userName,
+      },
+      ws
+    );
+
+    if (chat) {
+      return wss.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(
             JSON.stringify({
-              type: "success",
-              message: `Deleted message`,
+              message: chat.message,
+              sender: chat.sender,
+              time: chat.time,
+              username: chat.username,
             })
           );
         }
-      })
-      .catch((e) => {
-        handleConnectionError(ws, e);
       });
+    }
+  } else {
+    deleteChatMessage(parsedData.data, ws);
   }
 };

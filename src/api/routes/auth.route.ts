@@ -1,4 +1,4 @@
-import { login } from '../handlers/auth/login';
+import { login } from '../handlers/auth/login.handler';
 import express, { Router } from 'express';
 
 /**
