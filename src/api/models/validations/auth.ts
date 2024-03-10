@@ -1,4 +1,3 @@
-
 import WebSocket from "ws";import { handleConnectionError } from "../../utils/websocketUtils";
 import { ALLOWED_CLIENT_MESSAGES } from "../../constants/global";
 import { ParsedMessage } from "../types/message";
